@@ -2,17 +2,27 @@
 
 ## 使用した生成AIツール
 
-（例：ChatGPT 無料版 / Claude 無料版 / Gemini など）
+ChatGPT 無料版 
 
 ## 質問と回答の記録
 
 ### Q1
 
 **質問：**
-（生成AIに聞いた質問をそのまま書く）
+struct Song: Codable, Identifiable {} における Codable と Identifiable はそれぞれ何ですか？  
+それらは同じ種類のものですか？ それぞれの役割は何ですか？ どのような場合に使いますか？ なぜ一緒に使われるのですか？
 
 **AIの回答の要点：**
-（長い回答の場合、要点だけ自分の言葉でまとめる）
+Codable と Identifiable はどちらも Swift における「プロトコル(Protocol)」であり、同じ種類に属する。
+
+Codable は JSON とデータの<strong>変換</strong>を行う役割を持つ。
+Identifiable はデータに一意の ID を与え、<strong>識別</strong>できるようにする役割を持つ。   
+
+*JSON: JavaScript Object Notation  *ID: Identifier
+
+アプリ開発では、API からデータを取得する際には Codable が必要であり、それを UI でリスト（List）表示する際には Identifiable が必要となることが多い。  
+
+*UI: User Interface
 
 **自分の理解：**
 （回答を受けて自分がどう理解したか。納得できたか、さらに疑問が生まれたか）
