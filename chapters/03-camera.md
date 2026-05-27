@@ -181,17 +181,34 @@ struct CameraView: UIViewControllerRepresentable {
 ### PhotosPickerによる写真選択
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+                    PhotosPicker(selection: $selectedItem, matching: .images) {
+                        Label("ライブラリ", systemImage: "photo.on.rectangle")
+                    }
+                    .buttonStyle(.bordered)
 ```
 
 **何をしているか：**
 （この部分が果たしている役割を説明する）
 
+PhotosPicker を使って、フォトライブラリから写真を選択できるようにしている。
+
+選択した写真は selectedItem に保存される。
+
+また、matching: .images を指定することで、画像だけを選択対象にしている。
+
 **なぜこう書くのか：**
 （別の書き方ではなく、この書き方が選ばれている理由を説明する）
 
+PhotosPicker を使うと、SwiftUI だけで簡単に写真選択機能を実装できる。
+
+$selectedItem を使うことで、写真を選択した時に値が自動で更新される。
+
 **もしこう書かなかったら：**
 （この部分を省略したり変えたりすると何が起きるか。実際に試した結果があればここに書く）
+
+selection: $selectedItem がないと、選択した写真を取得できない。
+
+matching: .images を外すと、動画も表示されるようになる。
 
 ---
 
