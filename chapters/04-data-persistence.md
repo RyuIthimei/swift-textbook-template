@@ -274,59 +274,132 @@ struct SettingsView: View {
 ### SwiftDataモデル（@Model）
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+@Model
+class Memo {
+    var title: String
+    var content: String
+    var createdAt: Date
+    var isFavorite: Bool
+
+    init(title: String, content: String, createdAt: Date = .now, isFavorite: Bool = false) {
+        self.title = title
+        self.content = content
+        self.createdAt = createdAt
+        self.isFavorite = isFavorite
+    }
+}
 ```
 
 **何をしているか：**
 （この部分が果たしている役割を説明する）
 
+メモのデータの形を定義している部分である。
+タイトル・内容・作成日時・お気に入りかどうかを1つのデータとしてまとめている。
+
 **なぜこう書くのか：**
 （別の書き方ではなく、この書き方が選ばれている理由を説明する）
 
+SwiftData でデータを保存するためには、このように @Model を付けて「管理できるデータ」にする必要がある。
+
+これにより、保存や取得、更新が自動でできるようになる。
+
 **もしこう書かなかったら：**
 （この部分を省略したり変えたりすると何が起きるか。実際に試した結果があればここに書く）
+
+@Model を付けないと、SwiftData で保存できないため、アプリを閉じるとデータが消えてしまう。
+
+また、データの変更も自動で追跡されないので、一覧画面の更新も反映されない。
 
 ---
 
 ### データの追加・削除（modelContext）
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+ ToolbarItem(placement: .confirmationAction) {
+                    Button("保存") {
+                        let memo = Memo(title: title, content: content)
+                        modelContext.insert(memo)
+                        dismiss()
+                    }
+                    .disabled(title.isEmpty)
+                }
+
+
+func deleteMemos(at offsets: IndexSet) {
+        for index in offsets {
+            let memo = displayedMemos[index]
+            modelContext.delete(memo)
+        }
+    }
 ```
 
 **何をしているか：**
 
+メモの追加と削除を行っている部分である。「保存」ボタンを押すと新しいメモを作成して追加し、スワイプなどで選んだメモを削除している。
+
 **なぜこう書くのか：**
 
+SwiftData では modelContext を使うことで、データの追加や削除をまとめて管理できる。
+
+保存処理や更新処理を自分で書かなくても、変更が自動で反映されるようになっている。
+
 **もしこう書かなかったら：**
+
+modelContext を使わないと、メモの追加や削除ができず、画面の内容も更新されない。
+
+また、アプリを再起動すると変更した内容が保存されず、すべて元に戻ってしまう。
 
 ---
 
 ### @Queryによるデータ取得
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+ @Query(sort: \Memo.createdAt, order: .reverse) private var memos: [Memo]
 ```
 
 **何をしているか：**
 
+保存されているメモを自動で取得して一覧として表示している部分である。
+
+また、作成日時の新しい順に並べて表示するようになっている。
+
 **なぜこう書くのか：**
 
+@Query を使うことで、データの変更を自動で監視し、画面が自動的に更新されるようになる。
+
+自分で配列を更新しなくても、SwiftData が最新のデータを返してくれる。
+
 **もしこう書かなかったら：**
+
+@Query を使わずに自分で配列を管理すると、データが変わったときに画面が更新されない。
+
+また、削除や追加のたびに自分でリロード処理を書く必要がある。
 
 ---
 
 ### @AppStorageによる設定保存
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+    @AppStorage("sortByFavorite") private var sortByFavorite: Bool = false
+    @AppStorage("userName") private var userName: String = ""
 ```
 
 **何をしているか：**
 
+ユーザーの設定（名前や表示方法）を保存している部分である。
+アプリを閉じても値が残るようになっている。
+
 **なぜこう書くのか：**
 
+@AppStorage を使うことで、簡単に少量の設定データを保存できる。
+
+SwiftData のような複雑な仕組みを使わなくても、自動で端末に保存される。
+
 **もしこう書かなかったら：**
+
+@AppStorage を使わない場合、自分で UserDefaults などを管理する必要がある。
+
+その場合はコードが長くなり、設定の保存や読み込みが面倒になる。
 
 ---
 
