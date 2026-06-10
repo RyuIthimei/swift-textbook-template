@@ -370,14 +370,35 @@ class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationContro
 ## AIに聞いて特に理解が深まった質問 TOP3
 
 1. **質問：**
+
+   なぜ `loadTransferable()` を使う時に `await` が必要なのか？
+
    **得られた理解：**
+
+   `loadTransferable()` は非同期処理なので、処理が終わるまで待つために `await` が必要だと分かった。
 
 2. **質問：**
+
+   なぜ `Task` を使わないと `loadImage()` を呼び出せないのか？
+   
    **得られた理解：**
 
+   `loadImage()` は async 関数なので、そのままでは呼び出せない。SwiftUI の `onChange` の中で実行するために `Task` が必要だと理解した。
+
 3. **質問：**
+
+   PhotosPicker と UIImagePickerController はどのように使い分けるのか？
+   
    **得られた理解：**
+
+   PhotosPicker はフォトライブラリから画像を選択するために使う。一方、UIImagePickerController はカメラ撮影などの機能を利用するために使う。目的に応じて使い分ける必要があると分かった。
 
 ## この章のまとめ
 
 （この章で学んだ最も重要なことを、未来の自分が読み返したときに役立つように書く）
+
+この章で特に重要だったのは、写真を選ぶ処理とカメラで撮影する処理は別の方法で実装する必要があるということだった。
+
+また、画像の読み込みでは await と Task が必要になるので、エラーが出た時は非同期処理の書き方を確認する。
+
+写真を扱うアプリを作る時は、この章のコードを参考にすると実装しやすい。
