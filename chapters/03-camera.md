@@ -208,7 +208,7 @@ $selectedItem を使うことで、写真を選択した時に値が自動で更
 
 selection: $selectedItem がないと、選択した写真を取得できない。
 
-matching: .images を外すと、動画も表示されるようになる。
+matching: .images を外すと、画像だけを選択する制限がなくなる。。
 
 ---
 
@@ -358,14 +358,14 @@ class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationContro
 （模範コードを改変して試したことを書く）
 
 **実験1：**
-- やったこと：
-- 結果：
-- わかったこと：
+- やったこと：Task を削除して await loadImage() を直接呼び出した。
+- 結果：「Cannot pass function of type '(PhotosPickerItem?, PhotosPickerItem?) async -> ()'」というエラーが表示された。
+- わかったこと：onChange のクロージャは同期処理なので、async 関数を直接呼び出すことはできない。async 関数を実行するには Task が必要だとわかった。
 
 **実験2：**
-- やったこと：
-- 結果：
-- わかったこと：
+- やったこと：matching: .images を削除して実行した。
+- 結果：今回のシミュレータでは大きな違いは確認できなかった。
+- わかったこと：シミュレータ内に動画がなかったため変化は見られなかったが、matching: .images は画像のみを選択対象にするための設定であることが分かった。
 
 ## AIに聞いて特に理解が深まった質問 TOP3
 
