@@ -10,7 +10,7 @@
 例：この章では、PhotosPickerでフォトライブラリから写真を選択し、UIImagePickerControllerでカメラ撮影した画像を扱う方法を学ぶ。具体的には非同期で画像データを読み込み、UIViewControllerRepresentableを使ってUIKitをSwiftUIに統合し、Coordinatorパターンを使ってカメラ機能と連携するアプリを題材にする。
 
 この章では、PhotosPickerを使ってフォトライブラリから画像を選択する方法と、UIImagePickerControllerを使ってカメラで撮影した画像を扱う方法を学ぶ。
-また、非同期処理を使った画像データの読み込みや、UIViewControllerRepresentableを通じてUIKitをSwiftUIに統合する方法についても理解する。
+また、画像データを読み込む方法や、カメラ機能をSwiftUIから利用する方法についても学ぶ。
 
 ## 模範コードの全体像
 
@@ -215,42 +215,129 @@ matching: .images を外すと、動画も表示されるようになる。
 ### 画像の非同期読み込み
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+.onChange(of: selectedItem) { _, newItem in
+                Task {
+                    await loadImage(from: newItem)
+                }
+            }
+
+
+func loadImage(from item: PhotosPickerItem?) async {
+        guard let item = item else { return }
+
+        do {
+            if let data = try await item.loadTransferable(type: Data.self),
+               let uiImage = UIImage(data: data) {
+                selectedImage = Image(uiImage: uiImage)
+            }
+        } catch {
+            print("画像の読み込みに失敗: \(error.localizedDescription)")
+        }
+    }
+}
+
 ```
 
 **何をしているか：**
 
+写真が選択された時に、画像データを読み込んで画面に表示している。
+
+loadTransferable() を使って画像データを取得し、UIImage に変換している。
+
 **なぜこう書くのか：**
 
+loadTransferable() は await が必要な処理なので、
+
+処理が終わるのを待ってから画像を表示している。
+
+また、そのままでは呼び出せなかったため、Task の中で実行している。
+
 **もしこう書かなかったら：**
+
+await を付けないとエラーになり、画像を読み込めない。
+
+また、Task を使わずに loadImage() を呼ぼうとしても async 関数なので実行できなかった。
 
 ---
 
 ### UIViewControllerRepresentableによるカメラ連携
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+struct CameraView: UIViewControllerRepresentable {
+    @Binding var capturedImage: UIImage?
+    @Environment(\.dismiss) private var dismiss
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = context.coordinator
+        return picker
+    }
 ```
 
 **何をしているか：**
 
+カメラを起動するための設定を行っている。
+
+UIImagePickerController を使ってカメラ画面を表示し、撮影した画像をアプリで利用できるようにしている。
+
 **なぜこう書くのか：**
 
+SwiftUI だけではカメラを直接起動できなかったため、この方法を使っている。
+
+サンプルコードや参考資料を調べると、カメラ機能を使う場合はこの書き方がよく使われていた。
+
 **もしこう書かなかったら：**
+
+この部分がないとカメラを起動できない。
+
+また、撮影した写真をアプリで受け取ることもできない。
 
 ---
 
 ### Coordinatorパターン
 
 ```swift
-// 該当部分のコードを抜粋して貼る
+class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: CameraView
+
+        init(_ parent: CameraView) {
+            self.parent = parent
+        }
+
+        func imagePickerController(
+            _ picker: UIImagePickerController,
+            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+        ) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.capturedImage = image
+            }
+            parent.dismiss()
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.dismiss()
+        }
+    }
 ```
 
 **何をしているか：**
 
+撮影が終わった時やキャンセルした時の処理を行っている。
+
+写真が撮影された場合は、その画像を capturedImage に保存している。
+
 **なぜこう書くのか：**
 
+撮影後の画像を取得するために必要だからである。
+
+また、撮影が終わったあとに自動でカメラ画面を閉じるためにも使われている。
+
 **もしこう書かなかったら：**
+
+撮影した画像を取得できない。
+
+また、撮影後やキャンセル後にカメラ画面を閉じることができなくなる。
 
 ---
 
@@ -262,9 +349,9 @@ matching: .images を外すと、動画も表示されるようになる。
 |------|------|--------|
 | 例：`PhotosPicker` | フォトライブラリから画像を選択するコンポーネント | `PhotosPicker(selection: $selectedItem, matching: .images)` |
 | 例：`UIImagePickerController` | カメラまたはフォトライブラリにアクセスするUIKitコンポーネント | `picker.sourceType = .camera` |
-| | | |
-| | | |
-| | | |
+| `UIViewControllerRepresentable` | UIKit の画面を SwiftUI で利用するために使う | `struct CameraView: UIViewControllerRepresentable` |
+| `await` | 非同期処理の完了を待つために使う | `try await item.loadTransferable(type: Data.self)` |
+| `@Binding` | 親Viewと値を共有するために使う | `@Binding var capturedImage: UIImage?` |
 
 ## 自分の実験メモ
 
