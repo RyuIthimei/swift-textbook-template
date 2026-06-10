@@ -411,9 +411,10 @@ SwiftData のような複雑な仕組みを使わなくても、自動で端末�
 |------|------|--------|
 | 例：`@Model` | SwiftDataでオブジェクトを永続化するためのマクロ | `@Model final class Memo { ... }` |
 | 例：`@Query` | データベースからデータを取得し、変更を自動で反映するプロパティラッパー | `@Query var memos: [Memo]` |
-| | | |
-| | | |
-| | | |
+| `@AppStorage` | 小さな設定データを端末に自動保存する | @AppStorage("userName") var userName: String |
+| `@Bindable` | SwiftDataのデータを画面上で直接編集できるようにする | @Bindable var memo: Memo |
+| .modelContainer(for:) | SwiftDataをアプリ全体で使えるようにする設定 | .modelContainer(for: Memo.self) |
+| modelContext | データの追加・削除などの操作を行うための環境変数 | modelContext.insert(memo) |
 
 ## 自分の実験メモ
 
