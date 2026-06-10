@@ -37,11 +37,11 @@
 
 | 章 | ファイル |
 |---|---------|
-| 第1章 | [ai-questions/01-webapi-log.md](ai-questions/01-webapi-log.md) |
-| 第2章 | [ai-questions/02-map-log.md](ai-questions/02-map-log.md) |
-| 第3章 | [ai-questions/03-camera-log.md](ai-questions/03-camera-log.md) |
-| 第4章 | [ai-questions/04-data-persistence-log.md](ai-questions/04-data-persistence-log.md) |
-| 第5章 | [ai-questions/05-integration-log.md](ai-questions/05-integration-log.md) |
+| 第1章 | [ai-questions/01-webapi-log.md](ai-questions/01-webapi-log.md) | 11問 |
+| 第2章 | [ai-questions/02-map-log.md](ai-questions/02-map-log.md) | 3問 |
+| 第3章 | [ai-questions/03-camera-log.md](ai-questions/03-camera-log.md) | 3問 |
+| 第4章 | [ai-questions/04-data-persistence-log.md](ai-questions/04-data-persistence-log.md) | 3問 |
+| 第5章 | [ai-questions/05-integration-log.md](ai-questions/05-integration-log.md) | 途中 |
 | 第6章 | [ai-questions/06-gestures-log.md](ai-questions/06-gestures-log.md) |
 | 第7章 | [ai-questions/07-sensors-log.md](ai-questions/07-sensors-log.md) |
 | 第8章 | [ai-questions/08-widgets-log.md](ai-questions/08-widgets-log.md) |
