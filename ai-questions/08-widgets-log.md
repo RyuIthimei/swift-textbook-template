@@ -11,31 +11,43 @@ ChatGPT 無料版
 **質問：**
 （生成AIに聞いた質問をそのまま書く）
 
-SwiftUIの通常のViewのbodyとWidgetのbodyは何が違いますか？
-Widgetのbodyでは何を定義していますか？
+SwiftUIの通常のViewのbodyとWidgetのbodyは何が違う？
+Widgetのbodyでは何を定義している？
 
 **AIの回答の要点：**
 （長い回答の場合、要点だけ自分の言葉でまとめる）
 
-通常のViewのbodyは画面に表示するUIを作る場所です。
-WidgetのbodyはWidgetConfigurationを返し、Widgetの設定や動作を定義します。
+通常のViewのbodyは画面に表示するUIを作る場所。
+WidgetのbodyはWidgetConfigurationを返して、Widget全体の設定や動作を定義する。
 
-どのProviderを使うか、表示サイズ、表示内容などを設定します。
+Provider、表示サイズ、表示内容などを設定する。
 
 **自分の理解：**
 （回答を受けて自分がどう理解したか。納得できたか、さらに疑問が生まれたか）
 
-普通のViewのbodyは「部屋の中に何を置くか決める場所」で、Widgetのbodyは「その部屋のルールを決める場所」だと理解しました。
+普通のViewのbodyは「部屋の中に何を置くか決める場所」、Widgetのbodyは「その部屋のルールを決める場所」だと理解した。
 
-Widgetは画面だけではなく、表示方法全体を設定していることが分かりました。
+Widgetは画面を作るだけではなく、表示方法全体を管理している。
 
 ### Q2
 
 **質問：**
 
+TimelineProviderのplaceholder、getSnapshot、getTimelineはそれぞれいつ呼ばれて、どんな役割がある？
+
 **AIの回答の要点：**
 
+placeholderはWidget表示前の仮データを表示するために使う。
+
+getSnapshotはWidgetギャラリーでプレビュー表示するときに使う。
+
+getTimelineは実際の表示内容と次回更新時間を決める。
+
 **自分の理解：**
+
+3つのメソッドは「準備・確認・本番」のために分かれていると理解した。
+
+例えば旅行なら、placeholderは旅行の紹介写真、getSnapshotは予約画面、getTimelineは実際の旅行予定表のようなものだと思った。
 
 ### Q3
 
