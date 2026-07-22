@@ -27,7 +27,11 @@
 | 第5章 | 機能統合の実践 | [chapters/05-integration.md](chapters/05-integration.md) | 20% |
 | 第6章 | ジェスチャー操作 | [chapters/06-gestures.md](chapters/06-gestures.md) | 20% |
 | 第7章 | センサーの活用 | [chapters/07-sensors.md](chapters/07-sensors.md) | 30% |
-| 第8章 | ウィジェット | [chapters/08-widgets.md](chapters/08-widgets.md) | 未着手 |
+| 第8章 | ウィジェット | [chapters/08-widgets.md](chapters/08-widgets.md) | 10% |
+
+進捗管理：[Googleスプレッドシート]https://docs.google.com/spreadsheets/d/1KoPWJIceinTLZ5uU60ULTKiJK_EPjZsxIqpk_MNWMCc/edit?usp=sharing
+
+https://docs.google.com/spreadsheets/d/1KoPWJIceinTLZ5uU60ULTKiJK_EPjZsxIqpk_MNWMCc/edit?usp=sharing
 
 > 💡 各章を書き終えたら「状態」を「✅ 完了」に更新してください。
 
