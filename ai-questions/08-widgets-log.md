@@ -53,9 +53,23 @@ getTimelineは実際の表示内容と次回更新時間を決める。
 
 **質問：**
 
+メインアプリとWidget Extensionで同じQuoteやQuoteStoreを利用できるのはなぜ？
+
+Target Membershipにはどんな役割がある？
+
 **AIの回答の要点：**
 
+Widget Extensionはメインアプリとは別のTargetとして動作する。
+
+Target Membershipを設定すると、同じSwiftファイルを複数のTargetで利用できる。
+
+そのためAppとWidgetで同じデータを共有できる。
+
 **自分の理解：**
+
+Target Membershipは「このファイルを誰が使えるか決める設定」だと理解した。
+
+例えば同じ教科書を読む人を指定するようなもので、AppとWidget両方に設定すると同じQuoteデータを使える。
 
 （質問は何個でも追加してください。多ければ多いほど良いです。）
 
