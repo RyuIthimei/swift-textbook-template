@@ -31,8 +31,6 @@
 
 進捗管理：[Googleスプレッドシート]https://docs.google.com/spreadsheets/d/1KoPWJIceinTLZ5uU60ULTKiJK_EPjZsxIqpk_MNWMCc/edit?usp=sharing
 
-https://docs.google.com/spreadsheets/d/1KoPWJIceinTLZ5uU60ULTKiJK_EPjZsxIqpk_MNWMCc/edit?usp=sharing
-
 > 💡 各章を書き終えたら「状態」を「✅ 完了」に更新してください。
 
 ---
