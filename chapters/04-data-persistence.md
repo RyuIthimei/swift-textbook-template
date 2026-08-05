@@ -441,19 +441,12 @@ func confirmDelete(at offsets: IndexSet) {
 ```
 ```swift
 .alert("削除の確認", isPresented: $showDeleteAlert) {
-
     Button("削除", role: .destructive) {
-
         if let memo = memoToDelete {
-
             modelContext.delete(memo)
-
         }
-
     }
-
     Button("キャンセル", role: .cancel) { }
-
 }
 ```
 - やったこと：削除時に確認ダイアログを表示するように変更した。
