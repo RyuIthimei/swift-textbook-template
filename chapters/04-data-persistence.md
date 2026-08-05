@@ -427,21 +427,63 @@ SwiftData のような複雑な仕組みを使わなくても、自動で端末�
 （模範コードを改変して試したことを書く）
 
 **実験1：**
-- やったこと：メモをいくつか追加したあと、アプリを完全に終了して再起動した。
-- 結果：追加したメモが消えずにそのまま残っていた。
-- わかったこと：SwiftData はデータを端末に保存するため、アプリを閉じても内容が保持される。
+```swift
+@State private var showDeleteAlert = false
+@State private var memoToDelete: Memo?
+```
+```swift
+func confirmDelete(at offsets: IndexSet) {
+    if let index = offsets.first {
+        memoToDelete = displayedMemos[index]
+        showDeleteAlert = true
+    }
+}
+```
+```swift
+.alert("削除の確認", isPresented: $showDeleteAlert) {
 
-**実験2：**
-- やったこと：ユーザー名を変更してアプリを再起動した。
-- 結果：再起動してもユーザー名がそのまま残っていた。
-- わかったこと：@AppStorage は小さな設定データを自動で保存する仕組みである。
+    Button("削除", role: .destructive) {
 
-**実験3：**
+        if let memo = memoToDelete {
+
+            modelContext.delete(memo)
+
+        }
+
+    }
+
+    Button("キャンセル", role: .cancel) { }
+
+}
+```
 - やったこと：削除時に確認ダイアログを表示するように変更した。
 - 結果：すぐに削除されず、「削除」「キャンセル」を選択できるようになった。。
 - わかったこと：誤操作による削除を防ぐことができ、使いやすさが向上した。
 
-**実験4：**
+**実験2：**
+```swift
+@State private var searchText = ""
+```
+```swift
+var displayedMemos: [Memo] {
+    let keyword = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+    var result = memos
+
+    if sortByFavorite {
+        result = result.sorted { $0.isFavorite && !$1.isFavorite }
+    }
+
+    if keyword.isEmpty {
+        return result
+    }
+
+    return result.filter {
+        $0.title.localizedCaseInsensitiveContains(keyword) ||
+        $0.content.localizedCaseInsensitiveContains(keyword)
+    }
+}
+```
 - やったこと：メモ検索機能を追加した。タイトルまたは内容にキーワードが含まれるメモだけを表示するように変更した。
 - 結果：入力したキーワードを含むメモだけが表示された。
 - わかったこと：localizedCaseInsensitiveContains() を使うことで、大文字・小文字を区別せず部分一致検索ができることが分かった。
